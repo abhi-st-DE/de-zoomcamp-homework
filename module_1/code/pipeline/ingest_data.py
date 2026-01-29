@@ -4,6 +4,15 @@ from sqlalchemy import create_engine
 from tqdm.auto import tqdm
 
 
+# -------------------------
+# URLs
+# -------------------------
+BASE_URL = "https://d37ci6vzurychx.cloudfront.net"
+
+TAXI_ZONE_URL = f"{BASE_URL}/misc/taxi_zone_lookup.csv"
+GREEN_TAXI_URL = f"{BASE_URL}/trip-data/green_tripdata_2025-11.parquet"
+
+
 # CSV schema control is useful → KEEP
 taxi_zone_lookup_dtype = {
     "LocationID": "Int64",
@@ -30,7 +39,7 @@ def run(pg_user, pg_pass, pg_host, pg_port, pg_db):
     print("Ingesting taxi zone lookup data...")
 
     taxi_zone_df = pd.read_csv(
-        "taxi_zone_lookup.csv",
+        TAXI_ZONE_URL,
         dtype=taxi_zone_lookup_dtype
     )
 
@@ -48,7 +57,7 @@ def run(pg_user, pg_pass, pg_host, pg_port, pg_db):
     # -------------------------
     print("Ingesting Green taxi data...")
 
-    green_df = pd.read_parquet("green_tripdata.parquet")
+    green_df = pd.read_parquet(GREEN_TAXI_URL)
 
     chunksize = 100_000
 
