@@ -4,5 +4,5 @@ docker run -it --rm \
     --pg-user=postgres \
     --pg-pass=postgres  \
     --pg-host=db \
-    --pg-port=5433 \
+    --pg-port=5432 \
     --pg-db=ny_taxi
